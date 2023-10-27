@@ -27,15 +27,13 @@
             </div>
             <footer class="footer position-absolute bottom-2 py-2 w-100">
                 <div class="container">
-                    <div class="row align-items-center justify-content-lg-between">
-                        <div class="col-12 col-md-6 my-auto">
-                            <div class="copyright text-center text-sm text-white text-lg-start">
+                    <div class="row">
+                        <div class="col-sm-12 text-center text-white">
                                 © <script>
                                 document.write(new Date().getFullYear())
                                 </script>,
                                 made with <i class="fa fa-heart" aria-hidden="true"></i> by
-                                <a href="#" class="font-weight-bold text-white" target="_blank">suma dev</a>
-                            </div>
+                                <a href="#" class="font-weight-bold text-white" target="_blank">suma-dev</a>
                         </div>
                     </div>
                 </div>
@@ -45,8 +43,8 @@
     <!--   Core JS Files   -->
     <script src="{% static 'js/core/popper.min.js' %}"></script>
     <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/core/perfect-scrollbar.min.js' %}"></script>
-    <script src="{% static 'js/core/smooth-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/plugins/smooth-scrollbar.min.js' %}"></script>
     <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
