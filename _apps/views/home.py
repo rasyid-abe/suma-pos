@@ -5,4 +5,4 @@ def home(request):
     data = {
         'mac': hex(uuid.getnode())
     }
-    return render(request, 'base_app.html', data)
+    return render(request, 'dashboard/home.html', data)
