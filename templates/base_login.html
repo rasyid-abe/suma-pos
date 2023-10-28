@@ -1,46 +1,103 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
     <title>
-        SUMA APP
+        Argon Dashboard 2 by Creative Tim
     </title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/font-family.css' %}" />
+    <link href="{% static 'css/jquery.toast.css' %}" rel="stylesheet" />
     <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet" />
     <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
     <script src="{% static 'js/42d5adcbca.js' %}" crossorigin="anonymous"></script>
-    <link href="{% static 'css/material-icon.css' %}" rel="stylesheet">
-    <link id="pagestyle" href="{% static 'css/material-dashboard.css' %}" rel="stylesheet" />
+    <link id="pagestyle" href="{% static 'css/argon-dashboard.css' %}" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{% static 'js/jquery.toast.js' %}"></script>
 </head>
 
-<body class="bg-gray-200">
-    <main class="main-content  mt-0">
-        <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
-            <span class="mask bg-gradient-dark opacity-6"></span>
-            <div class="container my-auto">
-                {% block content %}
-                {% endblock %}
-            </div>
-            <footer class="footer position-absolute bottom-2 py-2 w-100">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12 text-center text-white">
-                                © <script>
-                                document.write(new Date().getFullYear())
-                                </script>,
-                                made with <i class="fa fa-heart" aria-hidden="true"></i> by
-                                <a href="#" class="font-weight-bold text-white" target="_blank">suma-dev</a>
+<body class="bg-dark">
+    <div class="container position-sticky z-index-sticky top-0">
+        <div class="row">
+            <div class="col-12">
+                <!-- Navbar -->
+                <nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
+                    <div class="container-fluid">
+                        <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
+                            SUMA MEN SALON
+                        </a>
+                        <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon mt-2">
+                                <span class="navbar-toggler-bar bar1"></span>
+                                <span class="navbar-toggler-bar bar2"></span>
+                                <span class="navbar-toggler-bar bar3"></span>
+                            </span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navigation">
+                            <ul class="navbar-nav" style="margin-left: auto; margin-right: 0;">
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="../pages/dashboard.html">
+                                        <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link me-2" href="../pages/profile.html">
+                                        <i class="fa fa-user opacity-6 text-dark me-1"></i>
+                                        Profile
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link me-2" href="../pages/profile.html">
+                                        <i class="fa fa-bar-chart opacity-6 text-dark me-1"></i>
+                                        Cashier
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link me-2" href="../pages/sign-up.html">
+                                        <i class="fa fa-sign-out opacity-6 text-dark me-1"></i>
+                                        Sign Out
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- <ul class="navbar-nav d-lg-block d-none">
+                                <li class="nav-item">
+                                    <a href="#" class="btn btn-sm mb-0 me-1 btn-primary">Cashier</a>
+                                </li>
+                            </ul> -->
                         </div>
                     </div>
-                </div>
-            </footer>
+                </nav>
+                <!-- End Navbar -->
+            </div>
         </div>
+    </div>
+    <main class="main-content  mt-0">
+        <section>
+            <div class="page-header min-vh-100">
+                <div class="container">
+
+                    <script type="text/javascript">
+                    function toast_act(heading, text, status) {
+                        $.toast({
+                            heading: heading,
+                            text: text,
+                            showHideTransition: 'slide',
+                            position: 'bottom-center',
+                            icon: status
+                        })
+                    }
+                    </script>
+
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </section>
     </main>
-    <!--   Core JS Files   -->
     <script src="{% static 'js/core/popper.min.js' %}"></script>
     <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}"></script>
@@ -54,9 +111,9 @@
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
     </script>
-    <!-- Github buttons -->
-    <script async defer src="#"></script>
-    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="{% static 'js/material-dashboard.min.js' %}"></script>
+    <script async defer src="{% static 'js/buttons.js' %}"></script>
+
+    <script src="{% static 'js/argon-dashboard.min.js' %}"></script>
 </body>
+
 </html>

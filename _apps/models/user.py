@@ -9,7 +9,7 @@ class Group(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.nama
+        return self.group
 
 class User(models.Model):
     name = models.CharField(max_length=250)

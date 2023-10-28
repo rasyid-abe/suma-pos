@@ -1,33 +1,27 @@
 {% extends 'base_login.html' %}
 
 {% block content %}
-<div class="row">
+<div class="row mt-8 mb-4">
     <div class="col-lg-4 col-md-8 col-12 mx-auto">
         <div class="card z-index-0 fadeIn3 fadeInBottom">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
-                    <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">SIGN IN HERE</h4>
+                <div class="bg-gradient-primary shadow-dark border-radius-lg py-3 pe-1">
+                    <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">User Management</h4>
                 </div>
             </div>
             <div class="card-body">
-                <form role="form" class="text-start" action="" method="post">
-                    <div class="input-group input-group-outline my-3">
-                        {{ form.username.errors }}
-                        <label class="form-label">Username</label>
-                        {{ form.username }}
-                    </div>
-                    <div class="input-group input-group-outline my-3">
-                        {{ form.email.errors }}
-                        <label class="form-label">Email</label>
-                        {{ form.email }}
-                    </div>
-                    <div class="input-group input-group-outline my-3">
-                        {{ form.password.errors }}
-                        <label class="form-label">Password</label>
-                        {{ form.password }}
-                    </div>
+
+                {% if status %}
+                <script type="text/javascript">
+                    toast_act( '{{heading}}', '{{text}}', '{{status}}' )
+                </script>
+                {% endif %}
+
+                <form role="form" class="text-start" action="{{ act }}" method="post" onload="toast_act();">
+                    {% csrf_token %}
+                    {{ form }}
                     <div class="text-center">
-                        <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign in</button>
+                        <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">{{ btn }}</button>
                     </div>
                 </form>
             </div>
