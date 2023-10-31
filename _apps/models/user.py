@@ -14,7 +14,7 @@ class Group(models.Model):
 class User(models.Model):
     name = models.CharField(max_length=250)
     username = models.CharField(max_length=255, unique=True, db_index=True)
-    password = models.CharField(max_length=255)
+    password = models.BinaryField()
     email = models.EmailField(max_length=255, unique=True, null=True)
     phone = models.IntegerField(unique=True, db_index=True, null=True)
     is_active = models.BooleanField(default=True)
@@ -24,4 +24,10 @@ class User(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.judul
+        return self.name
+
+class Session(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    mac = models.CharField(max_length=255)
+    expired = models.DateTimeField(auto_now_add=True)

@@ -10,9 +10,9 @@ class FormUser(ModelForm):
         widgets = {
             'name': forms.TextInput({'class':'form-control form-control-lg mb-2', 'placeholder':'Name'}),
             'username': forms.TextInput({'class':'form-control form-control-lg mb-2', 'placeholder':'Username'}),
-            'password': forms.PasswordInput({'class':'form-control form-control-lg mb-2', 'placeholder':'Password'}),
+            'password': forms.TextInput({'class':'form-control form-control-lg mb-2', 'placeholder':'Password'}),
             'email': forms.EmailInput({'class':'form-control form-control-lg mb-2', 'placeholder':'Email'}),
-            'phone': forms.TextInput({'class':'form-control form-control-lg mb-2', 'placeholder':'Phone +62'}),
+            'phone': forms.NumberInput({'class':'form-control form-control-lg mb-2', 'placeholder':'Phone +62'}),
             'group': forms.Select({'class':'form-control form-control-lg mb-2', 'placeholder':'Group'}),
         }
 

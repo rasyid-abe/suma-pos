@@ -10,13 +10,6 @@
                 </div>
             </div>
             <div class="card-body">
-
-                {% if status %}
-                <script type="text/javascript">
-                    toast_act( '{{heading}}', '{{text}}', '{{status}}' )
-                </script>
-                {% endif %}
-
                 <form role="form" class="text-start" action="{{ act }}" method="post" onload="toast_act();">
                     {% csrf_token %}
                     {{ form }}

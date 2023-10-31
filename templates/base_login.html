@@ -92,6 +92,12 @@
                     }
                     </script>
 
+                    {% if status %}
+                    <script type="text/javascript">
+                        toast_act( '{{heading}}', '{{text}}', '{{status}}' )
+                    </script>
+                    {% endif %}
+
                     {% block content %}
                     {% endblock %}
                 </div>
