@@ -1,90 +1,54 @@
 from django.shortcuts import render
-from _apps.forms.user import FormUser, FormGroup
-from _apps.models.user import User
-import uuid
-import bcrypt
+from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.contrib.auth import (
+    REDIRECT_FIELD_NAME, get_user_model, login as auth_login,
+)
+from django.contrib.auth.forms import (
+    AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm,
+)
+from django.utils.http import url_has_allowed_host_and_scheme, urlsafe_base64_decode
+from django.shortcuts import resolve_url
+from django.conf import settings
+from django.http import HttpResponseRedirect
+from _apps.forms.auth import AuthForm
 
 def login(request):
-    data = {}
+    redirect_to = request.POST.get(
+        REDIRECT_FIELD_NAME,
+        request.GET.get(REDIRECT_FIELD_NAME, '')
+    )
+
+    data = {
+        'form': AuthForm(),
+        'act': '/login/',
+        'btn': 'Login',
+    }
     redirect = 'auth/login.html'
+
     if request.POST:
-        user = request.POST
-        if User.objects.filter(username=user['username']).exists():
-            row = User.objects.filter(username=user['username'])[0]
-            hash = row.password
-            pwd = user['password'].encode('utf-8')
-            result = bcrypt.checkpw(pwd, hash)
-            if result:
-                if row.is_active:
+        form = AuthForm(request.POST)
+        if form.is_valid():
 
-                    redirect = 'auth/user.html'
+            if not url_has_allowed_host_and_scheme(url=redirect_to, allowed_hosts=request.get_host()):
+                redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
 
+            data['heading'] = 'Error'
+            data['status'] = 'error'
 
+            exists = User.objects.filter(username=form['username'].value())
+            if len(exists) > 0:
+                user = authenticate(username=form['username'].value(), password=form['password'].value())
+                if user is not None:
+                    if user.is_active:
+                        auth_login(request, user)
+                        return HttpResponseRedirect("/home/")
+                    else:
+                        data['text'] = 'Password salah!'
                 else:
-                    data['heading'] = 'Error'
-                    data['text'] = 'Akun anda tidak aktif.'
-                    data['status'] = 'error'
-
+                    data['text'] = 'Password salah!'
             else:
-                data['heading'] = 'Error'
-                data['text'] = 'Password Salah'
-                data['status'] = 'error'
+                data['text'] = 'Akun anda tidak terdaftar!'
 
-        else :
-            data['heading'] = 'Error'
-            data['text'] = 'User tidak terdaftar'
-            data['status'] = 'error'
-
-    # data = {
-    #     'mac': hex(uuid.getnode())
-    # }
     return render(request, redirect, data)
-
-def add_user(request):
-    data = {
-        'form': FormUser(),
-        'act': '/add_user/',
-        'btn': 'Save'
-    }
-
-    if request.POST:
-        form = FormUser(request.POST)
-        if form.is_valid():
-            salt = bcrypt.gensalt()
-
-            user = form.save(commit=False)
-            user.password = bcrypt.hashpw(user.username.encode('utf-8'), salt)
-            # import pdb; pdb.set_trace()
-            user.save()
-
-            data['heading'] = 'Success'
-            data['text'] = 'Data berhasil diinput'
-            data['status'] = 'success'
-        else :
-            data['heading'] = 'Error'
-            data['text'] = 'Data gagal diinput'
-            data['status'] = 'error'
-
-    return render(request, 'auth/user.html', data)
-
-def add_group(request):
-    data = {
-        'form': FormGroup(),
-        'act': '/add_group/',
-        'btn': 'Save'
-    }
-
-    if request.POST:
-        form = FormGroup(request.POST)
-        if form.is_valid():
-            form.save()
-
-            data['heading'] = 'Success'
-            data['text'] = 'Data berhasil diinput'
-            data['status'] = 'success'
-        else :
-            data['heading'] = 'Error'
-            data['text'] = 'Data gagal diinput'
-            data['status'] = 'error'
-
-    return render(request, 'auth/user.html', data)

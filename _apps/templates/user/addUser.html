@@ -10,11 +10,12 @@
                 </div>
             </div>
             <div class="card-body">
-                <form role="form" class="text-start" action="{{ act }}" method="post" onload="toast_act();">
+                <form role="form" class="text-start" action="{{ act }}" method="post">
                     {% csrf_token %}
                     {{ form }}
                     <div class="text-center">
-                        <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">{{ btn }}</button>
+                        <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-0">{{ btn }}</button>
+                        <a href="{% url 'user' %}" class="btn bg-gradient-secondary w-100 my-1 mb-2">Back</a>
                     </div>
                 </form>
             </div>

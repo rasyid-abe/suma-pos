@@ -1,0 +1,111 @@
+{% extends 'base_login.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.4.1/css/rowReorder.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css">
+
+<div class="row mt-3">
+    <div class="col-lg-12 mb-3">
+        <div class="card">
+            <div class="card-header p-3 pb-0">
+                <div class="row align-items-center justify-content-lg-between">
+                    <div class="col-lg-6 mb-lg-0">
+                        <div class="copyright text-center text-sm text-muted text-lg-start">
+                            <h6 class="font-weight-bolder">User Management</h6>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                            <li class="nav-item m-1">
+                                <a href="{% url 'addUser' %}" class="btn btn-sm btn-success border-radius-md p-1" type="button" data-bs-toggle="tooltip" data-bs-placement="left">
+                                    <i class="fas fa-plus p-2" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item m-1">
+                                <button class="btn btn-sm btn-info border-radius-md p-1" id="btn_dt_select" type="button" data-bs-toggle="tooltip" data-bs-placement="left">
+                                    <i class="fas fa-check p-2" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                            <li class="nav-item m-1">
+                                <button class="btn btn-sm btn-secondary border-radius-md p-1" id="btn_dt_unselect" type="button" data-bs-toggle="tooltip" data-bs-placement="left">
+                                    <i class="fas fa-minus p-2" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                            <li class="nav-item m-1">
+                                <button class="btn btn-sm btn-danger border-radius-md p-1" type="button" data-bs-toggle="tooltip" data-bs-placement="left">
+                                    <i class="fas fa-trash p-2" aria-hidden="true"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-3 pt-0">
+                <table id="example" class="nowrap compact hover row-border" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Last Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/rowreorder/1.4.1/js/dataTables.rowReorder.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript">
+    var table = $('#example').DataTable( {
+        processing: true,
+        pagingType: 'simple',
+        responsive: true,
+        select: true,
+        serverSide: true,
+        ajax: {
+            url: "/getUsers",
+            type: "GET",
+            dataType: "json",
+            data: function(d){
+                console.log(d);
+            },
+        },
+        columns: [
+			{name: "username", data: "username"},
+			{name: "email", data: "email"},
+			{defaultContent: '<a href="#" style="margin: 0; margin-left: 2px" class="btn btn-sm btn-dark btn-icon-only ml-1"><i class="fa fa-bars"></i></a><a href="#" style="margin: 0; margin-left: 2px" class="btn btn-sm btn-warning btn-icon-only ml-1"><i class="fa fa-pencil"></i></a><a href="#" style="margin: 0; margin-left: 2px" class="btn btn-sm btn-info btn-icon-only ml-1"><i class="fa fa-key"></i></a>', targets: -1, data: null, className: "text-end"},
+		]
+    });
+
+    $('#btn_dt_select').click(function () {
+        $.map(table.rows().select());
+    });
+    $('#btn_dt_unselect').click(function () {
+        $.map(table.rows().deselect());
+    });
+
+    // $(document).ready(function() {
+    //     $.ajax(
+    //     {
+    //         type:"GET",
+    //         url: "/getUsers",
+    //         data:{
+    //             post_id: 123
+    //         },
+    //         success: function( data )
+    //         {
+    //             console.log(data);
+    //         }
+    //     })
+    // })
+</script>
+{% endblock %}

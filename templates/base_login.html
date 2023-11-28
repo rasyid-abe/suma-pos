@@ -13,6 +13,8 @@
     <link href="{% static 'css/jquery.toast.css' %}" rel="stylesheet" />
     <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet" />
     <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+    <link href="{% static 'scss/modal.scss' %}" rel="stylesheet" />
+
     <script src="{% static 'js/42d5adcbca.js' %}" crossorigin="anonymous"></script>
     <link id="pagestyle" href="{% static 'css/argon-dashboard.css' %}" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -36,28 +38,29 @@
                                 <span class="navbar-toggler-bar bar3"></span>
                             </span>
                         </button>
-                        <div class="collapse navbar-collapse" id="navigation">
+                        {% if user.is_authenticated %}
+                            <div class="collapse navbar-collapse" id="navigation">
                             <ul class="navbar-nav" style="margin-left: auto; margin-right: 0;">
                                 <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="../pages/dashboard.html">
+                                    <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="{% url 'home' %}">
                                         <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
                                         Dashboard
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link me-2" href="../pages/profile.html">
+                                    <a class="nav-link me-2" href="{% url 'user' %}">
                                         <i class="fa fa-user opacity-6 text-dark me-1"></i>
-                                        Profile
+                                        User
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link me-2" href="../pages/profile.html">
+                                    <a class="nav-link me-2" href="#">
                                         <i class="fa fa-bar-chart opacity-6 text-dark me-1"></i>
                                         Cashier
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link me-2" href="../pages/sign-up.html">
+                                    <a class="nav-link me-2" href="{% url 'logout' %}">
                                         <i class="fa fa-sign-out opacity-6 text-dark me-1"></i>
                                         Sign Out
                                     </a>
@@ -69,32 +72,34 @@
                                 </li>
                             </ul> -->
                         </div>
+                        {% endif %}
                     </div>
                 </nav>
                 <!-- End Navbar -->
             </div>
         </div>
     </div>
-    <main class="main-content  mt-0">
+    <main class="main-content mt-7">
         <section>
-            <div class="page-header min-vh-100">
+            <div class="page-header">
                 <div class="container">
 
                     <script type="text/javascript">
-                    function toast_act(heading, text, status) {
+                    function toast_act(heading, text, status, time=5000) {
                         $.toast({
                             heading: heading,
                             text: text,
                             showHideTransition: 'slide',
                             position: 'bottom-center',
-                            icon: status
+                            icon: status,
+                            hideAfter: time
                         })
                     }
                     </script>
 
                     {% if status %}
                     <script type="text/javascript">
-                        toast_act( '{{heading}}', '{{text}}', '{{status}}' )
+                        toast_act( '{{heading}}', '{{text}}', '{{status}}',  '{{time}}' )
                     </script>
                     {% endif %}
 

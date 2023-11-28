@@ -1,25 +1,28 @@
 {% extends 'base_login.html' %}
 
 {% block content %}
-<div class="row">
-    <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
-        <div class="card card-plain bg-secondary">
-            <div class="card-header bg-primary pb-0 text-white">
-                <h4 class="font-weight-bolder text-white text-center">SUMA ADMIN</h4>
-                <p class="text-center text-white">SIGN IN HERE</p>
-            </div>
-            <div class="card-body">
-                <form role="form" action="/login/" method="post">
-                    {% csrf_token %}
-                    <input type="text" class="form-control form-control-lg mb-2" placeholder="Username" name="username" aria-label="Username">
-                    <input type="password" class="form-control form-control-lg mb-2" placeholder="Password" name="password" aria-label="Password">
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-1 mb-0">SIGN IN</button>
+{% if user.is_authenticated %}
+    <meta http-equiv="refresh" content="0; url={% url 'home' %}">
+{% else %}
+    <div class="row mt-5">
+        <div class="col-lg-4 col-md-8 col-12 mx-auto">
+            <div class="card z-index-0 fadeIn3 fadeInBottom">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-primary shadow-dark border-radius-lg py-3 pe-1">
+                        <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">LOGIN</h4>
                     </div>
-                </form>
+                </div>
+                <div class="card-body">
+                    <form role="form" class="text-start" action="{{ act }}" method="post">
+                        {% csrf_token %}
+                        {{ form }}
+                        <div class="text-center">
+                            <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">{{ btn }}</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
+{% endif %}
 {% endblock %}
